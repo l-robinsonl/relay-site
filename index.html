@@ -304,41 +304,53 @@
 <section id="get">
   <h2>Get Relay</h2>
   <p class="section-lede">
-    Built from source today, which takes one command and a few minutes. Signed
-    installers for each platform are on the way.
+    Download it and run it, the way you would run anything else. Or build it
+    yourself in one command, if you would rather not trust a binary you did not
+    compile — both are supported and neither is the lesser path.
   </p>
+
+  <div class="downloads">
+    <a class="download" href="https://github.com/l-robinsonl/relay/releases/latest">
+      <span class="os">Linux</span>
+      <span class="files"><code>.deb</code> <code>.rpm</code> <code>.AppImage</code></span>
+    </a>
+    <a class="download" href="https://github.com/l-robinsonl/relay/releases/latest">
+      <span class="os">macOS</span>
+      <span class="files"><code>.dmg</code></span>
+    </a>
+    <a class="download" href="https://github.com/l-robinsonl/relay/releases/latest">
+      <span class="os">Windows</span>
+      <span class="files"><code>.msi</code> <code>.exe</code></span>
+    </a>
+  </div>
 
   <div class="split">
     <div>
-      <h3>Build it</h3>
+      <h3>Or build it</h3>
       <pre class="snippet"><code>git clone https://github.com/l-robinsonl/relay
 cd relay
 npm install
 npm run tauri build</code></pre>
       <p class="footnote">
-        Needs Rust and Node. The binary lands in <code>target/release</code>,
-        and the Linux build also produces <code>.deb</code>,
-        <code>.rpm</code> and <code>.AppImage</code> packages.
+        Needs Rust and Node. The installers land in
+        <code>src-tauri/target/release/bundle</code>, and the binary beside
+        them in <code>target/release</code>.
       </p>
     </div>
     <div>
-      <h3>A note for macOS</h3>
+      <h3>First run on macOS and Windows</h3>
       <p>
-        Builds are not code-signed yet, so Gatekeeper will refuse one you did
-        not compile yourself. Right-click the application and choose
-        <b>Open</b> the first time, or clear the quarantine flag:
+        The downloads are not code-signed yet, so both will stop you once.
+        On macOS, right-click the application and choose <b>Open</b> the first
+        time, or clear the flag:
       </p>
       <pre class="snippet"><code>xattr -dr com.apple.quarantine /Applications/Relay.app</code></pre>
       <p class="footnote">
-        Windows may show an unknown-publisher warning for the same reason.
-        Linux is unaffected.
+        On Windows, choose <b>More info</b> then <b>Run anyway</b>. Linux is
+        unaffected. Certificates are the hold-up rather than anything in the
+        code — building it yourself sidesteps this entirely.
       </p>
     </div>
-  </div>
-
-  <div class="cta">
-    <a class="btn primary" href="https://github.com/l-robinsonl/relay">Source and releases</a>
-    <a class="btn" href="https://github.com/l-robinsonl/relay/blob/master/docs/HOSTING.md">Host the sync server</a>
   </div>
 </section>
 
