@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Relay — an API client that doesn't ask who you are</title>
+<meta name="description" content="A local-first desktop API client. No account, no sign-in, no telemetry. Your requests live on your disk. Sync is optional, to a server you choose.">
+<meta name="theme-color" content="#1a1d26">
+
+<meta property="og:title" content="Relay — an API client that doesn't ask who you are">
+<meta property="og:description" content="Postman won't send a GET until you sign in. Relay never asks. Your data stays on your disk; sync is optional, to a server you choose.">
+<meta property="og:type" content="website">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%234f7cf7'/><path d='M9 11h14M9 16h9M9 21h12' stroke='white' stroke-width='2.4' stroke-linecap='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <a class="brand" href="/">
+    <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+      <rect width="32" height="32" rx="7" fill="var(--accent)"/>
+      <path d="M9 11h14M9 16h9M9 21h12" stroke="white" stroke-width="2.4" stroke-linecap="round"/>
+    </svg>
+    <span>Relay</span>
+  </a>
+  <nav>
+    <a href="#what">What it is</a>
+    <a href="#sync">Sync</a>
+    <a href="#assistant">Assistant</a>
+    <a href="#honest">Status</a>
+    <a class="ghost" href="https://github.com/l-robinsonl/relay">GitHub&nbsp;↗</a>
+  </nav>
+</header>
+
+<main id="main">
+
+<section class="hero">
+  <p class="eyebrow">Local-first API client</p>
+  <h1>It never asks<br>who you are.</h1>
+  <p class="lede">
+    Postman will not let you send a GET request until you have signed in.
+    Relay has no account, no sign-in and no telemetry. Open it, type a URL,
+    press send. Your requests live in a SQLite file on your own disk — one
+    you can open, copy, back up or delete without asking anybody.
+  </p>
+  <div class="cta">
+    <a class="btn primary" href="https://github.com/l-robinsonl/relay">Read the source</a>
+    <a class="btn" href="#honest">What's not finished</a>
+  </div>
+  <p class="footnote">
+    Rust and Tauri. Linux today; macOS and Windows build and pass their tests
+    but are not signed yet. <a href="#honest">The honest status is below.</a>
+  </p>
+</section>
+
+<section class="band">
+  <div class="inner">
+    <div class="terminal" role="img" aria-label="An illustration of a request in Relay: a POST to the Stripe invoices endpoint returning 201 Created in 182 milliseconds.">
+      <div class="chrome"><i></i><i></i><i></i><span>Relay</span></div>
+      <pre><code><span class="m-post">POST</span> https://api.stripe.com/v1/invoices?expand[]=<span class="k">customer</span>
+  <span class="c">├─</span> <span class="k">Authorization</span>  Bearer <span class="s">{{stripeKey}}</span>   <span class="c">← secret, kept in your OS keyring</span>
+  <span class="c">├─</span> <span class="k">Idempotency-Key</span> <span class="s">{{idemKey}}</span>        <span class="c">← set by a pre-request script</span>
+  <span class="c">└─</span> <span class="k">Body</span>  customer=cus_7&amp;currency=gbp
+
+  <span class="ok">201 Created</span>  <span class="c">·</span> 182 ms <span class="c">·</span> 1.4 KB
+  <span class="ok">✓</span> the invoice is created        <span class="c">2 assertions</span>
+  <span class="ok">✓</span> response under 500ms</code></pre>
+    </div>
+  </div>
+</section>
+
+<section id="what">
+  <h2>What it is</h2>
+  <p class="section-lede">
+    A desktop API client. The same job as Postman or Insomnia — compose a
+    request, send it, read the response, keep the useful ones — with one
+    difference that changes everything downstream: nothing leaves your
+    machine unless you say so.
+  </p>
+
+  <div class="grid">
+    <article>
+      <h3>The whole HTTP surface</h3>
+      <p>
+        Every method, every body type, authentication, redirects, cookies,
+        proxies, client certificates, cancellation mid-flight. Large responses
+        stream to disk instead of eating your memory.
+      </p>
+    </article>
+    <article>
+      <h3>Variables that make sense</h3>
+      <p>
+        <code>{{baseUrl}}</code> resolves across workspace, collection,
+        environment and request, nearest wins. Secrets go in your operating
+        system's credential store — not the database, not an export, not a
+        sync payload.
+      </p>
+    </article>
+    <article>
+      <h3>Bring what you already have</h3>
+      <p>
+        Imports OpenAPI 3, Postman collections and environments, and cURL
+        commands. Exports to portable JSON, or copies any request back out as
+        cURL.
+      </p>
+    </article>
+    <article>
+      <h3>Scripts and tests</h3>
+      <p>
+        JavaScript before a request and after a response, in a sandbox with no
+        filesystem, network or process access. Write assertions; results appear
+        beside the response.
+      </p>
+    </article>
+    <article>
+      <h3>OAuth 2.0 that works</h3>
+      <p>
+        Authorization code with PKCE through a loopback listener, client
+        credentials, password grant. Tokens are held in memory and attached at
+        send time — never written to the database, an export or a sync.
+      </p>
+    </article>
+    <article>
+      <h3>It opens quickly</h3>
+      <p>
+        Because it is a native window, not a packaged web browser. That is a
+        consequence of how it is built rather than the reason to use it.
+      </p>
+    </article>
+  </div>
+</section>
+
+<section id="numbers" class="band">
+  <div class="inner">
+    <h2>Measured, not claimed</h2>
+    <p class="section-lede">
+      Both applications sitting idle on the same machine, measured with
+      <code>scripts/measure-memory.sh</code> in the repository. PSS — the honest
+      number, which divides shared memory rather than counting it twice.
+    </p>
+
+    <table class="numbers">
+      <thead>
+        <tr><th scope="col"></th><th scope="col">Memory, idle</th><th scope="col">Download</th><th scope="col">Installed</th></tr>
+      </thead>
+      <tbody>
+        <tr class="us">
+          <th scope="row">Relay</th>
+          <td><strong>221 MB</strong></td>
+          <td><strong>7.3 MB</strong></td>
+          <td><strong>~20 MB</strong></td>
+        </tr>
+        <tr>
+          <th scope="row">Postman 11</th>
+          <td>1,067 MB</td>
+          <td>199 MB</td>
+          <td>538 MB</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="footnote">
+      One machine, one measurement, published so you can repeat it. If your
+      numbers differ, yours are the real ones.
+    </p>
+  </div>
+</section>
+
+<section id="sync">
+  <h2>Sync, if you ask for it</h2>
+  <p class="section-lede">
+    Relay works completely without a server, for ever, with no reduced
+    feature set. Turn sync on and you choose where it points.
+  </p>
+
+  <div class="split">
+    <div>
+      <h3>Run it yourself</h3>
+      <p>
+        One small Rust binary, or a Docker image. SQLite for a single team,
+        PostgreSQL if you prefer. No licence check, no phone-home, no account
+        with us — self-hosting costs nothing and depends on nobody.
+      </p>
+      <pre class="snippet"><code>docker run -p 8787:8787 \
+  -e RELAY_DATABASE_URL=sqlite:///data/relay.db \
+  relay-server</code></pre>
+    </div>
+    <div>
+      <h3>What syncing gives you</h3>
+      <ul class="ticks">
+        <li>The same collections on every machine you work from</li>
+        <li>Teammates, with viewer, editor and admin roles</li>
+        <li>Invitations bound to the address they were sent to</li>
+        <li>Live updates over a websocket</li>
+        <li>Conflicts shown side by side — never silently resolved</li>
+      </ul>
+      <p class="footnote">
+        A conflict is a question, not an accident. Relay shows you both
+        versions and lets you pick; it never quietly overwrites work.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="assistant" class="band">
+  <div class="inner">
+    <h2>An assistant that cannot read your secrets</h2>
+    <p class="section-lede">
+      Ask it to find a request, write a test, point a collection at staging —
+      anything you could do yourself. It uses your own API key, talks straight
+      from your machine to the provider you pick, and keeps its conversations
+      in the same local database as everything else.
+    </p>
+
+    <div class="grid two">
+      <article>
+        <h3>Your key, your provider</h3>
+        <p>
+          Claude, OpenAI, or anything speaking the same shape — Ollama and LM
+          Studio included, so the whole thing can run on your own machine. Relay
+          ships no key and runs no server for this.
+        </p>
+      </article>
+      <article>
+        <h3>It asks before it acts</h3>
+        <p>
+          Sending a request and deleting something always need your say-so,
+          inline, before they happen. A request the assistant sends is
+          indistinguishable at the far end from one you sent — so you get asked.
+        </p>
+      </article>
+      <article>
+        <h3>Secrets stay invisible to it</h3>
+        <p>
+          It can see that a variable called <code>apiSecret</code> exists. It
+          cannot see the value, and credential-shaped headers come back redacted.
+          An agent can be steered by whatever it just read on a web page; it is
+          not a safe place for a password.
+        </p>
+      </article>
+      <article>
+        <h3>Your own tools, too</h3>
+        <p>
+          Point it at an MCP server you run and its tools appear beside Relay's
+          own. Anything someone else's tool offers is always confirmed before it
+          runs.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="honest">
+  <h2>What isn't finished</h2>
+  <p class="section-lede">
+    Relay is built and tested but young. Rather than find this out after you
+    download it:
+  </p>
+
+  <ul class="status">
+    <li>
+      <span class="tag warn">Not signed</span>
+      <p>
+        There are no signed builds yet. macOS will refuse to open an unsigned
+        application outright, and Windows will warn you. Linux is unaffected.
+        Certificates are the hold-up, not code.
+      </p>
+    </li>
+    <li>
+      <span class="tag warn">No hosted option</span>
+      <p>
+        There is no managed service to sign up for. Self-hosting is the only
+        way to sync today, and it is the way that was built first on purpose.
+      </p>
+    </li>
+    <li>
+      <span class="tag ok">Tested</span>
+      <p>
+        Around a thousand automated tests, run on Linux, macOS and Windows on
+        every change, including the synchronisation server against real
+        PostgreSQL.
+      </p>
+    </li>
+  </ul>
+
+  <div class="cta">
+    <a class="btn primary" href="https://github.com/l-robinsonl/relay">Build it from source</a>
+    <a class="btn" href="https://github.com/l-robinsonl/relay/blob/master/docs/HOSTING.md">Host the sync server</a>
+  </div>
+</section>
+
+<section class="closer">
+  <h2>No account. No telemetry.<br>No reason to trust us.</h2>
+  <p>
+    Every claim on this page is checkable in the source, which is the point.
+    Relay asks you to trust a program running on your own machine, with its
+    data in a file you can open — not a company.
+  </p>
+  <a class="btn primary big" href="https://github.com/l-robinsonl/relay">github.com/l-robinsonl/relay</a>
+</section>
+
+</main>
+
+<footer>
+  <p>Relay is free software, dual-licensed MIT and Apache-2.0.</p>
+  <nav>
+    <a href="https://github.com/l-robinsonl/relay">Source</a>
+    <a href="https://github.com/l-robinsonl/relay/blob/master/docs/HOSTING.md">Self-hosting</a>
+    <a href="https://github.com/l-robinsonl/relay/blob/master/docs/SCRIPTING.md">Scripting</a>
+    <a href="https://github.com/l-robinsonl/relay/issues">Issues</a>
+  </nav>
+</footer>
+
+</body>
+</html>

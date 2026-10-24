@@ -1,0 +1,371 @@
+/*
+ * Relay's site.
+ *
+ * Hand-written CSS, no framework and no build step — partly because the
+ * page is small enough not to need one, and partly because a site
+ * arguing against shipping a browser to send an HTTP request should not
+ * ship 200 KB of JavaScript to render six paragraphs.
+ *
+ * The palette is lifted from the application itself, so the two read as
+ * one product.
+ */
+
+:root {
+  --surface-base: oklch(0.18 0.012 265);
+  --surface-sunken: oklch(0.15 0.012 265);
+  --surface-raised: oklch(0.21 0.013 265);
+  --border-subtle: oklch(0.27 0.012 265);
+  --border-default: oklch(0.32 0.014 265);
+  --text-primary: oklch(0.95 0.004 265);
+  --text-secondary: oklch(0.74 0.010 265);
+  --text-muted: oklch(0.58 0.012 265);
+  --accent: oklch(0.68 0.17 262);
+  --accent-hover: oklch(0.73 0.17 262);
+  --accent-text: oklch(0.80 0.12 262);
+  --success: oklch(0.72 0.17 152);
+  --warning: oklch(0.80 0.15 85);
+  --method-post: oklch(0.80 0.15 85);
+
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Inter, sans-serif;
+  --measure: 62ch;
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --surface-base: oklch(0.99 0.002 265);
+    --surface-sunken: oklch(0.965 0.004 265);
+    --surface-raised: oklch(1 0 0);
+    --border-subtle: oklch(0.91 0.005 265);
+    --border-default: oklch(0.85 0.007 265);
+    --text-primary: oklch(0.22 0.014 265);
+    --text-secondary: oklch(0.42 0.012 265);
+    --text-muted: oklch(0.56 0.012 265);
+    --accent: oklch(0.52 0.19 262);
+    --accent-hover: oklch(0.46 0.19 262);
+    --accent-text: oklch(0.46 0.17 262);
+    --success: oklch(0.52 0.15 152);
+    --warning: oklch(0.55 0.14 70);
+    --method-post: oklch(0.55 0.14 70);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--surface-base);
+  color: var(--text-secondary);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { color: var(--text-primary); line-height: 1.15; margin: 0; }
+h1 { font-size: clamp(2.6rem, 8vw, 4.75rem); letter-spacing: -0.035em; font-weight: 600; }
+h2 { font-size: clamp(1.6rem, 4vw, 2.3rem); letter-spacing: -0.022em; font-weight: 600; }
+h3 { font-size: 1rem; letter-spacing: -0.005em; font-weight: 600; }
+p { margin: 0 0 1rem; }
+
+a { color: var(--accent-text); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--accent-hover); }
+
+code {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+  color: var(--accent-text);
+  padding: 0.12em 0.36em;
+  border-radius: 4px;
+}
+
+.skip {
+  position: absolute; left: -9999px;
+  background: var(--accent); color: #fff;
+  padding: 0.6rem 1rem; border-radius: 6px; z-index: 10;
+}
+.skip:focus { left: 1rem; top: 1rem; }
+
+/* --- header ------------------------------------------------------- */
+
+.site {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; align-items: center; gap: 2rem;
+  padding: 0.9rem var(--gutter);
+  background: color-mix(in oklab, var(--surface-base) 86%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.brand {
+  display: flex; align-items: center; gap: 0.6rem;
+  color: var(--text-primary); text-decoration: none;
+  font-weight: 600; letter-spacing: -0.02em;
+}
+.mark { width: 24px; height: 24px; border-radius: 6px; }
+.site nav { margin-left: auto; display: flex; gap: 1.6rem; align-items: center; }
+.site nav a {
+  color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;
+}
+.site nav a:hover { color: var(--text-primary); }
+.site nav .ghost {
+  border: 1px solid var(--border-default);
+  padding: 0.35rem 0.8rem; border-radius: 7px;
+}
+@media (max-width: 760px) {
+  .site nav a:not(.ghost) { display: none; }
+}
+
+/* --- sections ----------------------------------------------------- */
+
+section {
+  padding: clamp(4rem, 10vw, 7.5rem) var(--gutter);
+  max-width: 1140px;
+  margin-inline: auto;
+}
+.band {
+  max-width: none;
+  background: var(--surface-sunken);
+  border-block: 1px solid var(--border-subtle);
+}
+/* A band bleeds to the edges; its contents still line up with every
+   other section. Without the wrapper, `margin-inline: auto` on a narrow
+   child centred it — the footnote under the numbers table floated into
+   the middle of the page while the table above it sat left. */
+.band > .inner { max-width: 1140px; margin-inline: auto; }
+
+.section-lede {
+  max-width: var(--measure);
+  font-size: 1.08rem;
+  margin: 1rem 0 2.75rem;
+}
+
+/* --- hero --------------------------------------------------------- */
+
+.hero { padding-top: clamp(3.5rem, 9vw, 6.5rem); padding-bottom: 2rem; }
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+.hero h1 { margin-bottom: 1.6rem; }
+.lede {
+  max-width: 56ch;
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  color: var(--text-secondary);
+}
+.cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+.footnote {
+  margin-top: 1.5rem;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  max-width: var(--measure);
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.65rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.93rem;
+  font-weight: 500;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+.btn:hover { background: var(--surface-raised); border-color: var(--border-strong, var(--border-default)); color: var(--text-primary); }
+.btn.primary {
+  background: var(--accent); border-color: var(--accent); color: #fff;
+}
+.btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: #fff; }
+.btn.big { padding: 0.85rem 1.6rem; font-family: var(--mono); font-size: 0.95rem; }
+
+/* --- the terminal illustration ------------------------------------ */
+
+.terminal {
+  max-width: 880px;
+  margin-inline: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  background: var(--surface-base);
+  overflow: hidden;
+  box-shadow: 0 24px 60px -30px rgb(0 0 0 / 0.55);
+}
+.chrome {
+  display: flex; align-items: center; gap: 0.45rem;
+  padding: 0.7rem 0.95rem;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-raised);
+}
+.chrome i { width: 10px; height: 10px; border-radius: 50%; background: var(--border-default); }
+.chrome span {
+  margin-left: 0.6rem; font-family: var(--mono);
+  font-size: 0.74rem; color: var(--text-muted);
+}
+/* The global inline-`code` style must not reach a block of code: it
+   painted an accent background behind every line of the illustration. */
+.terminal pre code,
+.terminal pre code span {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+  border-radius: 0;
+}
+.terminal pre {
+  margin: 0; padding: 1.4rem 1.3rem;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: clamp(0.72rem, 1.6vw, 0.84rem);
+  line-height: 1.85;
+  color: var(--text-secondary);
+}
+.m-post { color: var(--method-post); font-weight: 500; }
+.terminal .k { color: var(--text-primary); }
+.terminal .s { color: var(--accent-text); }
+.terminal .c { color: var(--text-muted); }
+.terminal .ok { color: var(--success); }
+
+/* --- feature grid ------------------------------------------------- */
+
+.grid {
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  background: var(--border-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.grid article { background: var(--surface-base); padding: 1.6rem 1.5rem; }
+.band .grid article { background: var(--surface-sunken); }
+/* Cards in a row should end level even when one has more to say. */
+.grid article { display: flex; flex-direction: column; }
+.grid h3 { margin-bottom: 0.5rem; }
+.grid p { margin: 0; font-size: 0.95rem; }
+/* Exactly two columns: four cards in an auto-fit grid fell 3 + 1 and
+   left a dead cell the width of a third of the page. */
+.grid.two { grid-template-columns: 1fr; }
+@media (min-width: 760px) { .grid.two { grid-template-columns: 1fr 1fr; } }
+
+/* --- numbers ------------------------------------------------------ */
+
+.numbers {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 0.5rem;
+}
+.numbers th, .numbers td {
+  text-align: right;
+  padding: 0.95rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.numbers thead th {
+  font-size: 0.76rem; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--text-muted);
+}
+.numbers tbody th {
+  text-align: left; color: var(--text-primary); font-weight: 500;
+}
+.numbers .us td { color: var(--text-primary); }
+.numbers .us strong { color: var(--success); font-weight: 600; }
+.numbers tbody tr:last-child td,
+.numbers tbody tr:last-child th { border-bottom: 0; }
+
+/* --- split -------------------------------------------------------- */
+
+.split {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+.split h3 { margin-bottom: 0.6rem; }
+.split p { font-size: 0.95rem; }
+
+.snippet {
+  margin: 1.25rem 0 0;
+  padding: 1rem 1.1rem;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border-subtle);
+  border-radius: 9px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+.band .snippet { background: var(--surface-base); }
+.snippet code { background: none; color: inherit; padding: 0; font-size: inherit; }
+
+.ticks { list-style: none; margin: 0 0 1rem; padding: 0; }
+.ticks li {
+  position: relative; padding-left: 1.6rem; margin-bottom: 0.55rem;
+  font-size: 0.95rem;
+}
+.ticks li::before {
+  content: "";
+  position: absolute; left: 0; top: 0.58em;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--success);
+}
+
+/* --- status ------------------------------------------------------- */
+
+.status { list-style: none; margin: 0 0 2.5rem; padding: 0; }
+.status li {
+  display: grid;
+  grid-template-columns: 9.5rem 1fr;
+  gap: 1.25rem;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--border-subtle);
+}
+.status li:last-child { border-bottom: 1px solid var(--border-subtle); }
+.status p { margin: 0; font-size: 0.95rem; max-width: var(--measure); }
+.tag {
+  justify-self: start;
+  /* And `align-self`, or the pill stretches to the height of the
+     paragraph beside it; at 999px radius a tall box is a circle. */
+  align-self: start;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  padding: 0.3rem 0.75rem;
+  line-height: 1.4;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+.tag.warn { color: var(--warning); }
+.tag.ok { color: var(--success); }
+@media (max-width: 620px) {
+  .status li { grid-template-columns: 1fr; gap: 0.6rem; }
+}
+
+/* --- closer and footer -------------------------------------------- */
+
+.closer { text-align: center; padding-block: clamp(5rem, 12vw, 9rem); }
+.closer h2 { font-size: clamp(1.8rem, 5vw, 3rem); margin-bottom: 1.25rem; }
+.closer p { max-width: 54ch; margin-inline: auto; margin-bottom: 2rem; }
+
+footer {
+  border-top: 1px solid var(--border-subtle);
+  padding: 2.25rem var(--gutter);
+  display: flex; flex-wrap: wrap; gap: 1rem 2rem;
+  align-items: center;
+  font-size: 0.88rem;
+}
+footer p { margin: 0; color: var(--text-muted); }
+footer nav { margin-left: auto; display: flex; flex-wrap: wrap; gap: 1.4rem; }
+footer nav a { color: var(--text-secondary); text-decoration: none; }
+footer nav a:hover { color: var(--text-primary); }
