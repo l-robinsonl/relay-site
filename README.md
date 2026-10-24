@@ -37,10 +37,29 @@ page says so. It quotes PSS rather than RSS because PSS divides shared
 memory instead of counting it twice, which is the honest figure and
 also the less flattering one.
 
-**Keep the status section current.** The page tells people what is not
-finished — unsigned builds, no hosted option — before they find out
-themselves. That section is the reason the rest of the page is worth
-believing. When something ships, move it; do not quietly delete it.
+**Keep the status current.** The page tells people what is not
+finished — unsigned builds, chiefly — before they find out themselves.
+That honesty is the reason the rest of the page is worth believing.
+When something ships, move it; do not quietly delete it.
+
+**Every price must match the server.** The four figures on the page
+come from the Stripe prices the sync server is configured with, and
+the thousand included assistant requests from `RELAY_ASSISTANT_TURNS`,
+which defaults to 1000. A page quoting a price the checkout does not
+charge is worse than a page with no prices on it.
+
+**The free tier is load-bearing, not a funnel trick.** One person on
+the hosted server is free forever with nothing held back, and
+self-hosting is free for any number of people. Both are true in the
+code — `Entitlement::solo()` and a server with no Stripe keys
+configured — and the page says so plainly because that is the whole
+argument for trusting the paid tier.
+
+**A feature grid may hold any number of cards.** The separator lines
+are a ring on each card rather than a container background showing
+through the gaps, so a row that does not fill simply ends. The old
+version left a grey hole at any count that was not a multiple of the
+column count, which changed with the viewport.
 
 **The claims are checkable on purpose.** Every assertion about what
 Relay does corresponds to something in the source. If a feature

@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Relay — an API client that doesn't ask who you are</title>
-<meta name="description" content="A local-first desktop API client. No account, no sign-in, no telemetry. Your requests live on your disk. Sync is optional, to a server you choose.">
+<meta name="description" content="A local-first desktop API client for teams. No account needed, no telemetry, your requests on your disk. HTTP, GraphQL, websockets and server-sent events. Free for one person; £2 a person a month to share.">
 <meta name="theme-color" content="#1a1d26">
 
 <meta property="og:title" content="Relay — an API client that doesn't ask who you are">
-<meta property="og:description" content="Postman won't send a GET until you sign in. Relay never asks. Your data stays on your disk; sync is optional, to a server you choose.">
+<meta property="og:description" content="Postman won't send a GET until you sign in. Relay never asks. Your data stays on your disk, your team syncs to a server you choose, and one person is free forever.">
 <meta property="og:type" content="website">
 
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%234f7cf7'/><path d='M9 11h14M9 16h9M9 21h12' stroke='white' stroke-width='2.4' stroke-linecap='round'/></svg>">
@@ -31,9 +31,9 @@
   </a>
   <nav>
     <a href="#what">What it is</a>
-    <a href="#sync">Sync</a>
+    <a href="#teams">Teams</a>
     <a href="#assistant">Assistant</a>
-    <a href="#account">Accounts</a>
+    <a href="#pricing">Pricing</a>
     <a href="#get">Get it</a>
     <a class="ghost" href="https://github.com/l-robinsonl/relay">GitHub&nbsp;↗</a>
   </nav>
@@ -49,6 +49,11 @@
     Relay has no account, no sign-in and no telemetry. Open it, type a URL,
     press send. Your requests live in a SQLite file on your own disk — one
     you can open, copy, back up or delete without asking anybody.
+  </p>
+  <p class="lede">
+    When your team needs the same collections, turn sync on and point it at
+    a server you run, or at ours for <b>£2 a person a month</b>. One person
+    is free on either, forever, with nothing held back.
   </p>
   <div class="cta">
     <a class="btn primary" href="#get">Get Relay</a>
@@ -95,6 +100,16 @@
       </p>
     </article>
     <article>
+      <h3>Not only HTTP</h3>
+      <p>
+        <b>GraphQL</b>, with a button that asks the endpoint for its schema.
+        <b>Server-sent events</b> and <b>websockets</b>, picked from the same
+        dropdown as the verbs — a connection keeps the URL, headers, variables
+        and authentication the request already had, and opens a live transcript
+        you can type into.
+      </p>
+    </article>
+    <article>
       <h3>Variables that make sense</h3>
       <p>
         <code>{{baseUrl}}</code> resolves across workspace, collection,
@@ -125,6 +140,15 @@
         Authorization code with PKCE through a loopback listener, client
         credentials, password grant. Tokens are held in memory and attached at
         send time — never written to the database, an export or a sync.
+      </p>
+    </article>
+    <article>
+      <h3>Everything you sent, kept</h3>
+      <p>
+        Every send goes into history with its response, so the one that
+        worked an hour ago is still there to look at or replay. Ctrl&#8209;K
+        opens a palette that reaches any request, collection or environment
+        without touching the mouse.
       </p>
     </article>
     <article>
@@ -172,50 +196,140 @@
   </div>
 </section>
 
-<section id="sync">
-  <h2>Sync, if you ask for it</h2>
+<section id="teams">
+  <h2>Built for a team that<br>would rather not have an account</h2>
   <p class="section-lede">
-    Relay works completely without a server, forever, with no reduced
-    feature set. Turn sync on and you choose where it points.
+    One person needs no server at all, and Relay is whole without one. The
+    moment a second person needs the same collections, you have a choice most
+    API clients do not offer: run the server yourself, or let us run it. The
+    software is identical either way.
   </p>
 
   <div class="split">
     <div>
-      <h3>Run it yourself</h3>
-      <p>
-        One small Rust binary, or a Docker image. SQLite for a single team,
-        PostgreSQL if you prefer. No licence check, no phone-home, no account
-        with us — self-hosting costs nothing and depends on nobody.
-      </p>
-      <pre class="snippet"><code>docker run -p 8787:8787 \
-  -e RELAY_DATABASE_URL=sqlite:///data/relay.db \
-  relay-server</code></pre>
-    </div>
-    <div>
-      <h3>What syncing gives you</h3>
+      <h3>What a team gets</h3>
       <ul class="ticks">
-        <li>The same collections on every machine you work from</li>
-        <li>Teammates, with viewer, editor and admin roles</li>
+        <li>The same collections on every machine, for everyone</li>
+        <li>Viewer, editor and admin roles, changed from inside the app</li>
         <li>Invitations bound to the address they were sent to</li>
-        <li>Live updates over a websocket</li>
-        <li>Conflicts shown side by side — never silently resolved</li>
+        <li>Live updates over a websocket — no refresh button</li>
+        <li>Conflicts shown side by side, never silently resolved</li>
+        <li>Secrets that do not sync, because they never leave your keyring</li>
       </ul>
       <p class="footnote">
         A conflict is a question, not an accident. Relay shows you both
         versions and lets you pick; it never quietly overwrites work.
       </p>
     </div>
+    <div>
+      <h3>Run the server yourself</h3>
+      <p>
+        One small Rust binary, or a Docker image. SQLite for a single team,
+        PostgreSQL if you prefer. No licence check, no seat count, no
+        phone-home, no account with us — self-hosting is free for any number
+        of people and depends on nobody, including us.
+      </p>
+      <pre class="snippet"><code>docker run -p 8787:8787 \
+  -e RELAY_DATABASE_URL=sqlite:///data/relay.db \
+  relay-server</code></pre>
+      <p class="footnote">
+        This is the path that was built first, and the one the whole design
+        assumes. The hosted option below is the same software, running on
+        somebody else's computer.
+      </p>
+    </div>
   </div>
 </section>
 
-<section id="assistant" class="band">
+<section id="pricing" class="band">
   <div class="inner">
+    <h2>What it costs</h2>
+    <p class="section-lede">
+      Relay itself is free software and always will be. Running a server for
+      other people costs money, so that is the only thing with a price on it —
+      and only from the second person onward.
+    </p>
+
+    <div class="plans">
+      <article class="plan">
+        <h3>Self-hosted</h3>
+        <p class="price"><span class="amount">Free</span></p>
+        <p class="per">any number of people</p>
+        <ul class="ticks">
+          <li>The complete server, unrestricted</li>
+          <li>SQLite or PostgreSQL</li>
+          <li>No licence key, no seat count</li>
+          <li>Your assistant key, unmetered</li>
+        </ul>
+        <a class="btn" href="https://github.com/l-robinsonl/relay/blob/master/docs/HOSTING.md">How to host it</a>
+      </article>
+
+      <article class="plan">
+        <h3>Solo</h3>
+        <p class="price"><span class="amount">Free</span></p>
+        <p class="per">one person, on our server, forever</p>
+        <ul class="ticks">
+          <li>Your workspace on every machine you use</li>
+          <li>No card, no trial, no expiry</li>
+          <li>Nothing held back to make you upgrade</li>
+          <li>Your assistant key, unmetered</li>
+        </ul>
+        <a class="btn" href="https://relay-sync-ct0w.onrender.com/signup">Create an account</a>
+      </article>
+
+      <article class="plan featured">
+        <h3>Team</h3>
+        <p class="price"><span class="amount">£2</span><span class="unit">/person/month</span></p>
+        <p class="per">billed yearly &middot; £3 month&#8209;to&#8209;month</p>
+        <ul class="ticks">
+          <li>Everything in Solo, for everyone</li>
+          <li>Roles, invitations and live updates</li>
+          <li>Add and remove people whenever</li>
+          <li>Your assistant key, unmetered</li>
+        </ul>
+        <a class="btn primary" href="https://relay-sync-ct0w.onrender.com/signup">Start with one person</a>
+      </article>
+
+      <article class="plan">
+        <h3>Team&nbsp;+&nbsp;Assistant</h3>
+        <p class="price"><span class="amount">£5</span><span class="unit">/person/month</span></p>
+        <p class="per">billed yearly &middot; £6 month&#8209;to&#8209;month</p>
+        <ul class="ticks">
+          <li>Everything in Team</li>
+          <li>The assistant with no key to find</li>
+          <li>1,000 requests a person a month</li>
+          <li>Your own key still free past that</li>
+        </ul>
+        <a class="btn" href="#assistant">What it does</a>
+      </article>
+    </div>
+
+    <div class="promise">
+      <h3>A lapsed card never holds your work hostage</h3>
+      <p>
+        If a payment fails, syncing keeps working. Reading keeps working.
+        Exporting keeps working. The only thing that stops is <i>adding
+        another person</i>, and your existing team is never locked out or
+        locked down. A tool you keep your API requests in has no business
+        taking them away over a card that expired.
+      </p>
+      <p class="footnote">
+        And if you would rather not be billed by anybody at all, the
+        self-hosted server has no seat limit and no billing in it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="assistant">
+  <div class="inner plain">
     <h2>An assistant that cannot read your secrets</h2>
     <p class="section-lede">
       Ask it to find a request, write a test, point a collection at staging —
-      anything you could do yourself. It uses your own API key, talks straight
-      from your machine to the provider you pick, and keeps its conversations
-      in the same local database as everything else.
+      anything you could do yourself. Bring your own API key and it talks
+      straight from your machine to the provider you pick; or let the team
+      plan carry it and nobody has to find a key at all. Either way its
+      conversations live in the same local database as everything else.
     </p>
 
     <div class="grid two">
@@ -223,8 +337,18 @@
         <h3>Your key, your provider</h3>
         <p>
           Claude, OpenAI, or anything speaking the same shape — Ollama and LM
-          Studio included, so the whole thing can run on your own machine. Relay
-          ships no key and runs no server for this.
+          Studio included, so the whole thing can run on your own machine.
+          Your own key is free, unmetered and never counted, on every plan
+          including the free ones.
+        </p>
+      </article>
+      <article>
+        <h3>Or no key at all</h3>
+        <p>
+          On <b>Team&nbsp;+&nbsp;Assistant</b> the server holds the key, so
+          nobody on the team has to find one, pay a second bill or paste a
+          credential into a settings box. A thousand requests a person a
+          month; past that your own key picks up, free, as it always was.
         </p>
       </article>
       <article>
@@ -252,51 +376,59 @@
           runs.
         </p>
       </article>
+      <article>
+        <h3>The conversations stay with you</h3>
+        <p>
+          In the same SQLite file as your requests, on your disk, searchable
+          and deletable by you. A tool whose whole argument is that your data
+          is yours cannot answer <i>where do my conversations live</i> with
+          somebody else's cloud.
+        </p>
+      </article>
     </div>
   </div>
 </section>
 
-<section id="account">
-  <h2>Getting an account</h2>
-  <p class="section-lede">
-    You do not need one. If you only work on one machine, skip this entirely —
-    Relay is whole without it. An account exists so a workspace can follow you
-    between machines and be shared with people you work with.
-  </p>
+<section id="account" class="band">
+  <div class="inner">
+    <h2>Starting a team</h2>
+    <p class="section-lede">
+      Three steps, and the first person pays nothing. Invite the second when
+      there is a second.
+    </p>
 
-  <div class="split">
-    <div>
-      <h3>Use the server we run</h3>
-      <ol class="steps">
-        <li>
-          <a href="https://relay-sync-ct0w.onrender.com/signup">Create an account</a>
-          — an address and a password, nothing else.
-        </li>
-        <li>Install Relay and open <b>Sync</b>.</li>
-        <li>
-          Give it this address:
-          <code class="address">https://relay-sync-ct0w.onrender.com</code>
-        </li>
-      </ol>
-      <p class="footnote">
-        It idles when nobody is using it, so the first request after a quiet
-        spell takes a moment to wake. Your edits queue meanwhile and nothing
-        is lost.
-      </p>
-    </div>
-    <div>
-      <h3>Or run your own</h3>
-      <p>
-        The same server, on your hardware, with no account here at all. One
-        binary or one container, SQLite or PostgreSQL, and nothing phones home.
-        This is the path that was built first, and the one the whole design
-        assumes.
-      </p>
-      <p class="footnote">
-        Self-hosting is not a lesser option with features held back. It is the
-        same software, and the hosted one above is simply an instance of it.
-      </p>
-      <a class="btn" href="https://github.com/l-robinsonl/relay/blob/master/docs/HOSTING.md">How to host it</a>
+    <div class="split">
+      <div>
+        <ol class="steps">
+          <li>
+            <a href="https://relay-sync-ct0w.onrender.com/signup">Create an account</a>
+            — an address and a password, nothing else.
+          </li>
+          <li>Install Relay and open <b>Sync</b>.</li>
+          <li>
+            Give it this address:
+            <code class="address">https://relay-sync-ct0w.onrender.com</code>
+          </li>
+        </ol>
+        <p class="footnote">
+          It idles when nobody is using it, so the first request after a quiet
+          spell takes a moment to wake. Your edits queue meanwhile and nothing
+          is lost.
+        </p>
+      </div>
+      <div>
+        <h3>Then invite someone</h3>
+        <p>
+          <b>Sync → Members → Invite</b>, with a role. They get a link, pick a
+          password, and land in the workspace with everything already in it.
+          The invitation only works for the address it was sent to, so a
+          forwarded email is not a way in.
+        </p>
+        <p class="footnote">
+          Adding the second person is the moment a card is needed. Nothing
+          before that asks for one, and there is no trial to run out.
+        </p>
+      </div>
     </div>
   </div>
 </section>
@@ -359,7 +491,9 @@ npm run tauri build</code></pre>
   <p>
     Every claim on this page is checkable in the source, which is the point.
     Relay asks you to trust a program running on your own machine, with its
-    data in a file you can open — not a company.
+    data in a file you can open — not a company. That stays true whether you
+    are one person or twenty, because the server your team syncs to can be
+    one you run.
   </p>
   <p class="credential">
     Around a thousand automated tests, run on Linux, macOS and Windows on every

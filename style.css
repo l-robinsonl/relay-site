@@ -237,23 +237,34 @@ section {
 
 /* --- feature grid ------------------------------------------------- */
 
+/*
+ * The separator lines are a ring on each card, not a background
+ * showing through the gaps.
+ *
+ * With the background trick an empty cell is a grey hole, so the grid
+ * only looked right at an exact multiple of however many columns it
+ * happened to have — which changes with the viewport. Every card
+ * added meant hunting for a filler. A ring belongs to the card, so a
+ * row that is not full simply ends.
+ */
 .grid {
   display: grid;
   gap: 1px;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  background: var(--border-subtle);
-  border: 1px solid var(--border-subtle);
   border-radius: 12px;
-  overflow: hidden;
 }
-.grid article { background: var(--surface-base); padding: 1.6rem 1.5rem; }
+.grid article {
+  background: var(--surface-base);
+  box-shadow: 0 0 0 1px var(--border-subtle);
+  padding: 1.6rem 1.5rem;
+}
 .band .grid article { background: var(--surface-sunken); }
 /* Cards in a row should end level even when one has more to say. */
 .grid article { display: flex; flex-direction: column; }
 .grid h3 { margin-bottom: 0.5rem; }
 .grid p { margin: 0; font-size: 0.95rem; }
-/* Exactly two columns: four cards in an auto-fit grid fell 3 + 1 and
-   left a dead cell the width of a third of the page. */
+/* Two columns by choice rather than by necessity: these cards are
+   wordier and read better wide. */
 .grid.two { grid-template-columns: 1fr; }
 @media (min-width: 760px) { .grid.two { grid-template-columns: 1fr 1fr; } }
 
@@ -370,6 +381,70 @@ section {
   width: 9px; height: 9px; border-radius: 50%;
   background: var(--success);
 }
+
+/* --- pricing ------------------------------------------------------ */
+
+.plans {
+  display: grid;
+  gap: 1rem;
+  /* Four plans, but they wrap to two and then one rather than being
+     squeezed: a price nobody can read is worse than a second row. */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+.plan {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1.4rem;
+  background: var(--surface-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+}
+.plan h3 { margin-bottom: 0.9rem; font-size: 1.05rem; }
+.plan.featured {
+  border-color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 7%, var(--surface-base));
+}
+.price { margin: 0 0 0.15rem; line-height: 1; }
+.price .amount {
+  font-size: 2.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+.price .unit {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-left: 0.3rem;
+}
+.per {
+  margin: 0 0 1.1rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.plan .ticks { margin-bottom: 1.4rem; }
+.plan .ticks li { font-size: 0.88rem; margin-bottom: 0.45rem; }
+.plan .ticks li::before { top: 0.5em; width: 7px; height: 7px; }
+/* Pushes the button to the bottom so a shorter plan's button still
+   lines up with its neighbours'. */
+.plan .btn { margin-top: auto; justify-content: center; text-align: center; }
+
+.promise {
+  /* Hugs its own text. Full width with a measure-capped paragraph
+     inside leaves half the box empty and reads as a mistake. */
+  max-width: 68ch;
+  padding: 1.6rem 1.5rem;
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--success);
+  border-radius: 10px;
+  background: var(--surface-base);
+}
+.promise h3 { margin-bottom: 0.6rem; }
+.promise p { font-size: 0.95rem; max-width: var(--measure); }
+.promise p:last-child { margin-bottom: 0; }
+
+/* A section that is not a band still wants the band's measure. */
+.inner.plain { max-width: 1140px; margin-inline: auto; }
 
 /* --- status ------------------------------------------------------- */
 
