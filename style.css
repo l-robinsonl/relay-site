@@ -375,6 +375,13 @@ section {
 .closer h2 { font-size: clamp(1.8rem, 5vw, 3rem); margin-bottom: 1.25rem; }
 .closer p { max-width: 54ch; margin-inline: auto; margin-bottom: 2rem; }
 
+.credential {
+  max-width: 52ch;
+  margin-inline: auto;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+}
+
 footer {
   border-top: 1px solid var(--border-subtle);
   padding: 2.25rem var(--gutter);

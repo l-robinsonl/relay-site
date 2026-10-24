@@ -34,7 +34,7 @@
     <a href="#sync">Sync</a>
     <a href="#assistant">Assistant</a>
     <a href="#account">Accounts</a>
-    <a href="#honest">Status</a>
+    <a href="#get">Get it</a>
     <a class="ghost" href="https://github.com/l-robinsonl/relay">GitHub&nbsp;↗</a>
   </nav>
 </header>
@@ -51,12 +51,12 @@
     you can open, copy, back up or delete without asking anybody.
   </p>
   <div class="cta">
-    <a class="btn primary" href="https://github.com/l-robinsonl/relay">Read the source</a>
-    <a class="btn" href="#honest">What's not finished</a>
+    <a class="btn primary" href="#get">Get Relay</a>
+    <a class="btn" href="https://github.com/l-robinsonl/relay">Read the source</a>
   </div>
   <p class="footnote">
-    Rust and Tauri. Linux today; macOS and Windows build and pass their tests
-    but are not signed yet. <a href="#honest">The honest status is below.</a>
+    Rust and Tauri. Linux, macOS and Windows. Free software, dual-licensed
+    MIT and Apache&#8209;2.0.
   </p>
 </section>
 
@@ -279,10 +279,9 @@
         </li>
       </ol>
       <p class="footnote">
-        Early and small: it runs on a free instance that falls asleep after a
-        quarter of an hour, so the first request after a quiet spell waits for
-        it to wake. Your edits queue while it does and nothing is lost. It is
-        for trying Relay with somebody else, not for running a company on.
+        It idles when nobody is using it, so the first request after a quiet
+        spell takes a moment to wake. Your edits queue meanwhile and nothing
+        is lost.
       </p>
     </div>
     <div>
@@ -302,43 +301,43 @@
   </div>
 </section>
 
-<section id="honest">
-  <h2>What isn't finished</h2>
+<section id="get">
+  <h2>Get Relay</h2>
   <p class="section-lede">
-    Relay is built and tested but young. Rather than find this out after you
-    download it:
+    Built from source today, which takes one command and a few minutes. Signed
+    installers for each platform are on the way.
   </p>
 
-  <ul class="status">
-    <li>
-      <span class="tag warn">Not signed</span>
-      <p>
-        There are no signed builds yet. macOS will refuse to open an unsigned
-        application outright, and Windows will warn you. Linux is unaffected.
-        Certificates are the hold-up, not code.
+  <div class="split">
+    <div>
+      <h3>Build it</h3>
+      <pre class="snippet"><code>git clone https://github.com/l-robinsonl/relay
+cd relay
+npm install
+npm run tauri build</code></pre>
+      <p class="footnote">
+        Needs Rust and Node. The binary lands in <code>target/release</code>,
+        and the Linux build also produces <code>.deb</code>,
+        <code>.rpm</code> and <code>.AppImage</code> packages.
       </p>
-    </li>
-    <li>
-      <span class="tag warn">Hosting is a trial</span>
+    </div>
+    <div>
+      <h3>A note for macOS</h3>
       <p>
-        The server you can <a href="#account">sign up to</a> runs on a free
-        instance that sleeps when idle, and there is no paid tier behind it
-        yet. Treat it as somewhere to try syncing with a colleague rather
-        than somewhere to keep anything you would miss.
+        Builds are not code-signed yet, so Gatekeeper will refuse one you did
+        not compile yourself. Right-click the application and choose
+        <b>Open</b> the first time, or clear the quarantine flag:
       </p>
-    </li>
-    <li>
-      <span class="tag ok">Tested</span>
-      <p>
-        Around a thousand automated tests, run on Linux, macOS and Windows on
-        every change, including the synchronisation server against real
-        PostgreSQL.
+      <pre class="snippet"><code>xattr -dr com.apple.quarantine /Applications/Relay.app</code></pre>
+      <p class="footnote">
+        Windows may show an unknown-publisher warning for the same reason.
+        Linux is unaffected.
       </p>
-    </li>
-  </ul>
+    </div>
+  </div>
 
   <div class="cta">
-    <a class="btn primary" href="https://github.com/l-robinsonl/relay">Build it from source</a>
+    <a class="btn primary" href="https://github.com/l-robinsonl/relay">Source and releases</a>
     <a class="btn" href="https://github.com/l-robinsonl/relay/blob/master/docs/HOSTING.md">Host the sync server</a>
   </div>
 </section>
@@ -349,6 +348,10 @@
     Every claim on this page is checkable in the source, which is the point.
     Relay asks you to trust a program running on your own machine, with its
     data in a file you can open — not a company.
+  </p>
+  <p class="credential">
+    Around a thousand automated tests, run on Linux, macOS and Windows on every
+    change, including the synchronisation server against real PostgreSQL.
   </p>
   <a class="btn primary big" href="https://github.com/l-robinsonl/relay">github.com/l-robinsonl/relay</a>
 </section>
