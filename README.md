@@ -44,9 +44,16 @@ When something ships, move it; do not quietly delete it.
 
 **Every price must match the server.** The four figures on the page
 come from the Stripe prices the sync server is configured with, and
-the thousand included assistant requests from `RELAY_ASSISTANT_TURNS`,
+the thousand included assistant messages from `RELAY_ASSISTANT_TURNS`,
 which defaults to 1000. A page quoting a price the checkout does not
 charge is worse than a page with no prices on it.
+
+**Never call an assistant turn a "request".** On a page about an API
+client, "1,000 requests a month" reads as a cap on the HTTP requests
+Relay sends, which would be absurd — those are never counted. It is
+also not a thousand questions: the server counts one per round trip to
+the model, so a question that uses tools spends several. The page says
+"messages to the model" and spells the distinction out.
 
 **The free tier is load-bearing, not a funnel trick.** One person on
 the hosted server is free forever with nothing held back, and
