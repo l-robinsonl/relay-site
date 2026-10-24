@@ -33,6 +33,7 @@
     <a href="#what">What it is</a>
     <a href="#sync">Sync</a>
     <a href="#assistant">Assistant</a>
+    <a href="#account">Accounts</a>
     <a href="#honest">Status</a>
     <a class="ghost" href="https://github.com/l-robinsonl/relay">GitHub&nbsp;↗</a>
   </nav>
@@ -255,6 +256,52 @@
   </div>
 </section>
 
+<section id="account">
+  <h2>Getting an account</h2>
+  <p class="section-lede">
+    You do not need one. If you only work on one machine, skip this entirely —
+    Relay is whole without it. An account exists so a workspace can follow you
+    between machines and be shared with people you work with.
+  </p>
+
+  <div class="split">
+    <div>
+      <h3>Use the server we run</h3>
+      <ol class="steps">
+        <li>
+          <a href="https://relay-sync-ct0w.onrender.com/signup">Create an account</a>
+          — an address and a password, nothing else.
+        </li>
+        <li>Install Relay and open <b>Sync</b>.</li>
+        <li>
+          Give it this address:
+          <code class="address">https://relay-sync-ct0w.onrender.com</code>
+        </li>
+      </ol>
+      <p class="footnote">
+        Early and small: it runs on a free instance that falls asleep after a
+        quarter of an hour, so the first request after a quiet spell waits for
+        it to wake. Your edits queue while it does and nothing is lost. It is
+        for trying Relay with somebody else, not for running a company on.
+      </p>
+    </div>
+    <div>
+      <h3>Or run your own</h3>
+      <p>
+        The same server, on your hardware, with no account here at all. One
+        binary or one container, SQLite or PostgreSQL, and nothing phones home.
+        This is the path that was built first, and the one the whole design
+        assumes.
+      </p>
+      <p class="footnote">
+        Self-hosting is not a lesser option with features held back. It is the
+        same software, and the hosted one above is simply an instance of it.
+      </p>
+      <a class="btn" href="https://github.com/l-robinsonl/relay/blob/master/docs/HOSTING.md">How to host it</a>
+    </div>
+  </div>
+</section>
+
 <section id="honest">
   <h2>What isn't finished</h2>
   <p class="section-lede">
@@ -272,10 +319,12 @@
       </p>
     </li>
     <li>
-      <span class="tag warn">No hosted option</span>
+      <span class="tag warn">Hosting is a trial</span>
       <p>
-        There is no managed service to sign up for. Self-hosting is the only
-        way to sync today, and it is the way that was built first on purpose.
+        The server you can <a href="#account">sign up to</a> runs on a free
+        instance that sleeps when idle, and there is no paid tier behind it
+        yet. Treat it as somewhere to try syncing with a colleague rather
+        than somewhere to keep anything you would miss.
       </p>
     </li>
     <li>
