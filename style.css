@@ -439,6 +439,9 @@ section {
   border-radius: 10px;
   background: var(--surface-base);
 }
+/* Two of these sit together, and without this they touch and read
+   as one box with a heading in the middle of it. */
+.promise + .promise { margin-top: 1rem; }
 .promise h3 { margin-bottom: 0.6rem; }
 .promise p { font-size: 0.95rem; max-width: var(--measure); }
 .promise p:last-child { margin-bottom: 0; }

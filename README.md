@@ -62,6 +62,17 @@ code — `Entitlement::solo()` and a server with no Stripe keys
 configured — and the page says so plainly because that is the whole
 argument for trusting the paid tier.
 
+**Never invent a reason for a solo user to pay for sync.** The first
+cut of this page had a Solo card and a Team card that were, for one
+person, the same free thing, under a button reading "Start with one
+person" — selling nothing. There are exactly two honest reasons to
+charge: another person on a server that costs money to run, and model
+requests that cost money per message. Anything else would mean holding
+a feature back from the free tier, which contradicts the sentence
+printed beside it and is the behaviour people are leaving Postman
+over. The assistant is why a solo user might pay, and it is available
+to one seat as readily as to ten.
+
 **A feature grid may hold any number of cards.** The separator lines
 are a ring on each card rather than a container background showing
 through the gaps, so a row that does not fill simply ends. The old
