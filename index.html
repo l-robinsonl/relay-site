@@ -45,15 +45,16 @@
   <p class="eyebrow">Local-first API client</p>
   <h1>It never asks<br>who you are.</h1>
   <p class="lede">
-    Postman will not let you send a GET request until you have signed in.
-    Relay has no account, no sign-in and no telemetry. Open it, type a URL,
-    press send. Your requests live in a SQLite file on your own disk — one
-    you can open, copy, back up or delete without asking anybody.
+    Postman makes you sign in before it will send a single GET request.
+    Relay doesn't. No account, no sign-in, nothing reported back to us.
+    Open it, type a URL, press send. Your requests are saved in an ordinary
+    file on your own disk, which you can copy, back up or delete whenever
+    you like.
   </p>
   <p class="lede">
-    When your team needs the same collections, turn sync on and point it at
-    a server you run, or at ours for <b>£2 a person a month</b>. One person
-    is free on either, forever, with nothing held back.
+    When your team needs the same collections, switch sync on and point it
+    at a server you run — or at ours, for <b>£2 a person a month</b>. One
+    person is free either way, forever.
   </p>
   <div class="cta">
     <a class="btn primary" href="#get">Get Relay</a>
@@ -70,7 +71,7 @@
     <div class="terminal" role="img" aria-label="An illustration of a request in Relay: a POST to the Stripe invoices endpoint returning 201 Created in 182 milliseconds.">
       <div class="chrome"><i></i><i></i><i></i><span>Relay</span></div>
       <pre><code><span class="m-post">POST</span> https://api.stripe.com/v1/invoices?expand[]=<span class="k">customer</span>
-  <span class="c">├─</span> <span class="k">Authorization</span>  Bearer <span class="s">{{stripeKey}}</span>   <span class="c">← secret, kept in your OS keyring</span>
+  <span class="c">├─</span> <span class="k">Authorization</span>  Bearer <span class="s">{{stripeKey}}</span>   <span class="c">← secret, kept in your system keychain</span>
   <span class="c">├─</span> <span class="k">Idempotency-Key</span> <span class="s">{{idemKey}}</span>        <span class="c">← set by a pre-request script</span>
   <span class="c">└─</span> <span class="k">Body</span>  customer=cus_7&amp;currency=gbp
 
@@ -84,78 +85,82 @@
 <section id="what">
   <h2>What it is</h2>
   <p class="section-lede">
-    A desktop API client. The same job as Postman or Insomnia — compose a
-    request, send it, read the response, keep the useful ones — with one
-    difference that changes everything downstream: nothing leaves your
-    machine unless you say so.
+    Relay does the same job as Postman or Insomnia: write a request, send
+    it, read the response, keep the ones you'll want again. The difference
+    is that nothing leaves your machine unless you ask it to.
   </p>
 
   <div class="grid">
     <article>
       <h3>The whole HTTP surface</h3>
       <p>
-        Every method, every body type, authentication, redirects, cookies,
-        proxies, client certificates, cancellation mid-flight. Large responses
-        stream to disk instead of eating your memory.
+        Every method and every body type, plus authentication, redirects,
+        cookies, proxies and client certificates. You can cancel a request
+        while it's still running. Big responses go to disk rather than
+        filling up your memory.
       </p>
     </article>
     <article>
       <h3>Not only HTTP</h3>
       <p>
-        <b>GraphQL</b>, with a button that asks the endpoint for its schema.
-        <b>Server-sent events</b> and <b>websockets</b>, picked from the same
-        dropdown as the verbs — a connection keeps the URL, headers, variables
-        and authentication the request already had, and opens a live transcript
-        you can type into.
+        <b>GraphQL</b>, with a button that fetches the schema from the
+        endpoint. <b>gRPC</b>, which asks the server what methods it has and
+        fills in the message for you. <b>Websockets</b> and
+        <b>server-sent events</b>, chosen from the same dropdown as GET and
+        POST. A connection keeps the URL, headers, variables and login
+        details you already set up, and opens a live transcript you can
+        type into.
       </p>
     </article>
     <article>
       <h3>Variables that make sense</h3>
       <p>
-        <code>{{baseUrl}}</code> resolves across workspace, collection,
-        environment and request, nearest wins. Secrets go in your operating
-        system's credential store — not the database, not an export, not a
-        sync payload.
+        Write <code>{{baseUrl}}</code> and Relay fills it in, checking the
+        request first, then the environment, then the collection, then the
+        workspace. Passwords and tokens go in your operating system's
+        keychain, so they never reach the database, an export or a sync.
       </p>
     </article>
     <article>
       <h3>Bring what you already have</h3>
       <p>
-        Imports OpenAPI 3, Postman collections and environments, and cURL
-        commands. Exports to portable JSON, or copies any request back out as
-        cURL.
+        Import OpenAPI 3 files, Postman collections and environments, or
+        just paste in a cURL command. Export to plain JSON, or copy any
+        request back out as cURL.
       </p>
     </article>
     <article>
       <h3>Scripts and tests</h3>
       <p>
-        JavaScript before a request and after a response, in a sandbox with no
-        filesystem, network or process access. Write assertions; results appear
-        beside the response.
+        Run JavaScript before a request and after a response. The sandbox
+        can't reach your files, your network or anything else on the
+        machine. Write assertions and the results appear next to the
+        response.
       </p>
     </article>
     <article>
       <h3>OAuth 2.0 that works</h3>
       <p>
-        Authorization code with PKCE through a loopback listener, client
-        credentials, password grant. Tokens are held in memory and attached at
-        send time — never written to the database, an export or a sync.
+        Authorization code with PKCE, client credentials and password
+        grant. Tokens are kept in memory and added as the request goes out,
+        so they're never written to the database, an export or a sync.
       </p>
     </article>
     <article>
       <h3>Everything you sent, kept</h3>
       <p>
-        Every send goes into history with its response, so the one that
-        worked an hour ago is still there to look at or replay. Ctrl&#8209;K
-        opens a palette that reaches any request, collection or environment
-        without touching the mouse.
+        Every request you send is kept with its response, so the one that
+        worked an hour ago is still there to read or run again.
+        Ctrl&#8209;K opens a search box that finds any request, collection
+        or environment without reaching for the mouse.
       </p>
     </article>
     <article>
       <h3>It opens quickly</h3>
       <p>
-        Because it is a native window, not a packaged web browser. That is a
-        consequence of how it is built rather than the reason to use it.
+        Relay is a native window rather than a packaged web browser, so it
+        starts fast and stays small. That's a side effect of how it's
+        built, not the reason to switch.
       </p>
     </article>
   </div>
@@ -165,9 +170,11 @@
   <div class="inner">
     <h2>Measured, not claimed</h2>
     <p class="section-lede">
-      Both applications sitting idle on the same machine, measured with
-      <code>scripts/measure-memory.sh</code> in the repository. PSS — the honest
-      number, which divides shared memory rather than counting it twice.
+      Both apps sitting idle on the same machine. We used
+      <code>scripts/measure-memory.sh</code>, which is in the repository, so
+      you can run it yourself. The figure is PSS, which shares out memory
+      used by more than one program instead of charging the full amount to
+      each of them.
     </p>
 
     <table class="numbers">
@@ -190,19 +197,19 @@
       </tbody>
     </table>
     <p class="footnote">
-      One machine, one measurement, published so you can repeat it. If your
-      numbers differ, yours are the real ones.
+      One machine, one measurement. If you get different numbers, trust
+      yours.
     </p>
   </div>
 </section>
 
 <section id="teams">
-  <h2>Built for a team that<br>would rather not have an account</h2>
+  <h2>Share it with your team</h2>
   <p class="section-lede">
-    One person needs no server at all, and Relay is whole without one. The
-    moment a second person needs the same collections, you have a choice most
-    API clients do not offer: run the server yourself, or let us run it. The
-    software is identical either way.
+    On your own you need no server at all, and Relay is complete without
+    one. As soon as a second person needs the same collections, you get a
+    choice most API clients don't offer: run the server yourself, or let us
+    run it. It's the same software either way.
   </p>
 
   <div class="split">
@@ -210,32 +217,32 @@
       <h3>What a team gets</h3>
       <ul class="ticks">
         <li>The same collections on every machine, for everyone</li>
-        <li>Viewer, editor and admin roles, changed from inside the app</li>
-        <li>Invitations bound to the address they were sent to</li>
-        <li>Live updates over a websocket — no refresh button</li>
-        <li>Conflicts shown side by side, never silently resolved</li>
-        <li>Secrets that do not sync, because they never leave your keyring</li>
+        <li>Viewer, editor and admin roles, set from inside the app</li>
+        <li>Invitations that only work for the address they were sent to</li>
+        <li>Changes appear as they happen, with no refresh button</li>
+        <li>Clashes shown side by side, never settled behind your back</li>
+        <li>Secrets stay out of it, because they never leave your keychain</li>
       </ul>
       <p class="footnote">
-        A conflict is a question, not an accident. Relay shows you both
-        versions and lets you pick; it never quietly overwrites work.
+        If two people change the same request, Relay shows you both
+        versions and asks which one you want. It never quietly overwrites
+        anybody's work.
       </p>
     </div>
     <div>
       <h3>Run the server yourself</h3>
       <p>
-        One small Rust binary, or a Docker image. SQLite for a single team,
-        PostgreSQL if you prefer. No licence check, no seat count, no
-        phone-home, no account with us — self-hosting is free for any number
-        of people and depends on nobody, including us.
+        One small binary, or a Docker image. SQLite if it's a single team,
+        PostgreSQL if you'd rather. No licence check, no seat count, nothing
+        phoning home and no account with us. Self-hosting is free for any
+        number of people.
       </p>
       <pre class="snippet"><code>docker run -p 8787:8787 \
   -e RELAY_DATABASE_URL=sqlite:///data/relay.db \
   relay-server</code></pre>
       <p class="footnote">
-        This is the path that was built first, and the one the whole design
-        assumes. The hosted option below is the same software, running on
-        somebody else's computer.
+        This is the version that was built first. The hosted option below
+        is the same software, running on a computer we look after.
       </p>
     </div>
   </div>
@@ -245,9 +252,9 @@
   <div class="inner">
     <h2>What it costs</h2>
     <p class="section-lede">
-      Relay itself is free software and always will be. The only thing with a
-      price on it is a server somebody else runs for you — and that is free
-      until there is a second person on it.
+      Relay is free software and always will be. The only thing we charge
+      for is running a server for you, and that's free until there's a
+      second person on it.
     </p>
 
     <div class="plans">
@@ -256,10 +263,10 @@
         <p class="price"><span class="amount">Free</span></p>
         <p class="per">any number of people</p>
         <ul class="ticks">
-          <li>The complete server, unrestricted</li>
+          <li>The complete server, nothing switched off</li>
           <li>SQLite or PostgreSQL</li>
           <li>No licence key, no seat count</li>
-          <li>Your assistant key, unmetered</li>
+          <li>Your own AI key, never counted</li>
         </ul>
         <a class="btn" href="https://github.com/l-robinsonl/relay/blob/master/docs/HOSTING.md">How to host it</a>
       </article>
@@ -272,10 +279,10 @@
         <p class="per">then £2 a person a month &middot; £3 month&#8209;to&#8209;month</p>
         <ul class="ticks">
           <li>Your workspace on every machine you use</li>
-          <li>No card, no trial, no expiry, on your own</li>
+          <li>On your own: no card, no trial, no expiry</li>
           <li>Invite people when you have people to invite</li>
           <li>Roles, invitations and live updates</li>
-          <li>Your assistant key, unmetered</li>
+          <li>Your own AI key, never counted</li>
         </ul>
         <a class="btn primary" href="https://relay-sync-ct0w.onrender.com/signup">Create an account</a>
       </article>
@@ -286,39 +293,37 @@
         <p class="per">billed yearly &middot; £6 month&#8209;to&#8209;month</p>
         <ul class="ticks">
           <li>Everything in Relay Cloud</li>
-          <li>The assistant with no key to find</li>
+          <li>The assistant, with no key to go and find</li>
           <li>1,000 AI messages a person a month</li>
           <li>On your own as well as in a team</li>
-          <li>Your own key still free past that</li>
+          <li>Your own key still free after that</li>
         </ul>
         <a class="btn" href="#assistant">What it does</a>
       </article>
     </div>
 
     <div class="promise">
-      <h3>A lapsed card never holds your work hostage</h3>
+      <h3>A failed payment never holds your work hostage</h3>
       <p>
-        If a payment fails, syncing keeps working. Reading keeps working.
-        Exporting keeps working. The only thing that stops is <i>adding
-        another person</i>, and your existing team is never locked out or
-        locked down. A tool you keep your API requests in has no business
-        taking them away over a card that expired.
+        If a payment fails, syncing carries on. So does reading, and so does
+        exporting. The only thing that stops is <i>adding another person</i>,
+        and nobody already in the workspace is locked out. An app you keep
+        your API requests in has no business taking them away because a card
+        expired.
       </p>
       <p class="footnote">
-        And if you would rather not be billed by anybody at all, the
-        self-hosted server has no seat limit and no billing in it.
+        And if you'd rather not be billed by anyone at all, the self-hosted
+        server has no seat limit and no billing code in it.
       </p>
     </div>
 
     <div class="promise">
       <h3>Nothing is held back from the free tier</h3>
       <p>
-        One person on Relay Cloud gets the whole application and the whole
-        server. There is no feature behind the price, because the price is
-        not for features — it is for the people you add and for the model
-        requests somebody has to pay for. That is the only honest reason to
-        charge, and it is the reason you are reading this page instead of
-        Postman's.
+        One person on Relay Cloud gets the whole app and the whole server.
+        Nothing is kept behind the price. We charge for the people you add,
+        and for the AI messages we have to pay for ourselves — not for
+        features.
       </p>
     </div>
   </div>
@@ -326,73 +331,75 @@
 
 <section id="assistant">
   <div class="inner plain">
-    <h2>An assistant that cannot read your secrets</h2>
+    <h2>An assistant that can't read your secrets</h2>
     <p class="section-lede">
-      Ask it to find a request, write a test, point a collection at staging —
-      anything you could do yourself. Bring your own API key and it talks
-      straight from your machine to the provider you pick; or let the team
-      plan carry it and nobody has to find a key at all. Either way its
-      conversations live in the same local database as everything else.
+      Ask it to find a request, write a test, or point a whole collection at
+      staging — anything you could do yourself. Bring your own API key and it
+      talks straight from your machine to whichever provider you choose, or
+      let the Assistant plan cover it and nobody needs a key at all. Either
+      way, the conversations are stored on your disk with everything else.
     </p>
 
     <div class="grid two">
       <article>
         <h3>Your key, your provider</h3>
         <p>
-          Claude, OpenAI, or anything speaking the same shape — Ollama and LM
-          Studio included, so the whole thing can run on your own machine.
-          Your own key is free, unmetered and never counted, on every plan
-          including the free ones.
+          Claude, OpenAI, or anything that speaks the same protocol — Ollama
+          and LM Studio included, so the whole thing can run on your own
+          machine. Using your own key is free and never counted, on every
+          plan including the free ones.
         </p>
       </article>
       <article>
         <h3>Or no key at all</h3>
         <p>
           On <b>Cloud&nbsp;+&nbsp;Assistant</b> the server holds the key, so
-          nobody has to find one, pay a second bill or paste a credential into
-          a settings box — on your own as much as in a team. A thousand
-          messages to the model per person per month; past that your own key
-          picks up, free, as it always was.
+          nobody has to go and get one, pay a second bill, or paste a
+          credential into a settings box. That applies on your own as much as
+          in a team. You get a thousand messages a person a month, and after
+          that your own key takes over, free as always.
         </p>
         <p class="footnote">
-          Messages to the <i>model</i>, not requests to your API — those are
-          never counted on any plan. A question that sends the assistant off
-          to look things up spends one message per step, so a thousand is
-          roughly a few hundred questions.
+          That means messages to the <i>AI</i>. The requests you send to your
+          own API are never counted, on any plan. One question can use a few
+          messages if the assistant goes off to look things up, so a thousand
+          works out at a few hundred questions.
         </p>
       </article>
       <article>
         <h3>It asks before it acts</h3>
         <p>
-          Sending a request and deleting something always need your say-so,
-          inline, before they happen. A request the assistant sends is
-          indistinguishable at the far end from one you sent — so you get asked.
+          Sending a request and deleting anything both need your say-so
+          first, right there in the chat. At the far end, a request the
+          assistant sends looks exactly like one you sent yourself — which is
+          why you get asked.
         </p>
       </article>
       <article>
         <h3>Secrets stay invisible to it</h3>
         <p>
-          It can see that a variable called <code>apiSecret</code> exists. It
-          cannot see the value, and credential-shaped headers come back redacted.
-          An agent can be steered by whatever it just read on a web page; it is
-          not a safe place for a password.
+          It can see that a variable called <code>apiSecret</code> exists, but
+          not what's in it, and anything that looks like a credential in a
+          header comes back blanked out. An assistant can be talked into
+          things by whatever it just read on a web page, so it's not a safe
+          place to keep a password.
         </p>
       </article>
       <article>
         <h3>Your own tools, too</h3>
         <p>
-          Point it at an MCP server you run and its tools appear beside Relay's
-          own. Anything someone else's tool offers is always confirmed before it
-          runs.
+          Point it at an MCP server you run and its tools show up next to
+          Relay's own. Anything from someone else's tool always asks you
+          first.
         </p>
       </article>
       <article>
         <h3>The conversations stay with you</h3>
         <p>
-          In the same SQLite file as your requests, on your disk, searchable
-          and deletable by you. A tool whose whole argument is that your data
-          is yours cannot answer <i>where do my conversations live</i> with
-          somebody else's cloud.
+          They're in the same file as your requests, on your disk, yours to
+          search or delete. An app whose whole argument is that your data is
+          yours can't answer <i>where are my conversations kept</i> with
+          "somebody else's cloud".
         </p>
       </article>
     </div>
@@ -403,8 +410,8 @@
   <div class="inner">
     <h2>Starting a team</h2>
     <p class="section-lede">
-      Three steps, and the first person pays nothing. Invite the second when
-      there is a second.
+      Three steps, and the first person pays nothing. Invite the second one
+      when there is a second one.
     </p>
 
     <div class="split">
@@ -421,22 +428,22 @@
           </li>
         </ol>
         <p class="footnote">
-          It idles when nobody is using it, so the first request after a quiet
-          spell takes a moment to wake. Your edits queue meanwhile and nothing
-          is lost.
+          The server goes to sleep when nobody's using it, so the first
+          request after a quiet spell takes a moment. Your edits wait in line
+          while it wakes up and nothing is lost.
         </p>
       </div>
       <div>
         <h3>Then invite someone</h3>
         <p>
-          <b>Sync → Members → Invite</b>, with a role. They get a link, pick a
-          password, and land in the workspace with everything already in it.
-          The invitation only works for the address it was sent to, so a
-          forwarded email is not a way in.
+          Go to <b>Sync → Members → Invite</b> and pick a role. They get a
+          link, choose a password, and arrive in the workspace with everything
+          already there. The invitation only works for the address it was sent
+          to, so forwarding the email doesn't let anyone else in.
         </p>
         <p class="footnote">
-          Adding the second person is the moment a card is needed. Nothing
-          before that asks for one, and there is no trial to run out.
+          Adding that second person is the moment a card is needed. Nothing
+          before it asks for one, and there's no trial to run out.
         </p>
       </div>
     </div>
@@ -446,9 +453,9 @@
 <section id="get">
   <h2>Get Relay</h2>
   <p class="section-lede">
-    Download it and run it, the way you would run anything else. Or build it
-    yourself in one command, if you would rather not trust a binary you did not
-    compile — both are supported and neither is the lesser path.
+    Download it and run it, the way you would anything else. Or build it
+    yourself in one command, if you'd rather not run a binary you didn't
+    compile. Both are properly supported; neither is the lesser option.
   </p>
 
   <div class="downloads">
@@ -474,23 +481,23 @@ cd relay
 npm install
 npm run tauri build</code></pre>
       <p class="footnote">
-        Needs Rust and Node. The installers land in
-        <code>src-tauri/target/release/bundle</code>, and the binary beside
-        them in <code>target/release</code>.
+        You'll need Rust and Node. The installers end up in
+        <code>target/release/bundle</code>, with the binary itself in
+        <code>target/release</code>.
       </p>
     </div>
     <div>
       <h3>First run on macOS and Windows</h3>
       <p>
-        The downloads are not code-signed yet, so both will stop you once.
-        On macOS, right-click the application and choose <b>Open</b> the first
-        time, or clear the flag:
+        The downloads aren't code-signed yet, so both will stop you once. On
+        macOS, right-click the app and choose <b>Open</b> the first time, or
+        clear the flag from a terminal:
       </p>
       <pre class="snippet"><code>xattr -dr com.apple.quarantine /Applications/Relay.app</code></pre>
       <p class="footnote">
-        On Windows, choose <b>More info</b> then <b>Run anyway</b>. Linux is
-        unaffected. Certificates are the hold-up rather than anything in the
-        code — building it yourself sidesteps this entirely.
+        On Windows, choose <b>More info</b> then <b>Run anyway</b>. Linux
+        isn't affected. What's holding this up is buying certificates, not
+        anything in the code, and building it yourself avoids it completely.
       </p>
     </div>
   </div>
@@ -499,15 +506,16 @@ npm run tauri build</code></pre>
 <section class="closer">
   <h2>No account. No telemetry.<br>No reason to trust us.</h2>
   <p>
-    Every claim on this page is checkable in the source, which is the point.
-    Relay asks you to trust a program running on your own machine, with its
-    data in a file you can open — not a company. That stays true whether you
-    are one person or twenty, because the server your team syncs to can be
-    one you run.
+    Every claim on this page can be checked in the source code. Relay asks
+    you to trust a program running on your own machine, with its data in a
+    file you can open — not a company. That holds whether you're one person
+    or twenty, because the server your team syncs to can be one you run
+    yourself.
   </p>
   <p class="credential">
-    Around a thousand automated tests, run on Linux, macOS and Windows on every
-    change, including the synchronisation server against real PostgreSQL.
+    Over a thousand automated tests, run on Linux, macOS and Windows every
+    time anything changes — including the sync server against a real
+    PostgreSQL database.
   </p>
   <a class="btn primary big" href="https://github.com/l-robinsonl/relay">github.com/l-robinsonl/relay</a>
 </section>

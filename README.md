@@ -79,6 +79,26 @@ through the gaps, so a row that does not fill simply ends. The old
 version left a grey hole at any count that was not a multiple of the
 column count, which changed with the viewport.
 
+**Write it the way you would say it.** The page is for someone deciding
+whether to download an API client, not for the person who built it. Use
+contractions. Keep sentences short. Say what a thing does before saying
+why it was done that way.
+
+Four habits to watch for, all of which this page had and all of which
+read as machine-written:
+
+- *"X is not Y, it is Z."* Fine once. It had six, and they stop
+  landing after the second.
+- No contractions anywhere — "it is", "does not", "cannot". Stiff.
+- An em-dash aside in every paragraph.
+- Explaining the reasoning behind a decision to a reader who only
+  wanted to know what the product does. "Which is the point",
+  "deliberately", "by construction".
+
+The one exception is the honesty passages — the failed-payment promise,
+the free tier, the measured figures. Those are arguments, and an
+argument is allowed to have a shape.
+
 **The claims are checkable on purpose.** Every assertion about what
 Relay does corresponds to something in the source. If a feature
 changes, the page changes.
